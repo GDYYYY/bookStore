@@ -1,0 +1,48 @@
+#header{
+    font-style: italic;
+    font-size: medium;
+}
+
+#table1{
+    border-radius: 5px;
+    border: 1px;
+    border-color: #769FCD;
+    
+}/*无用*/
+
+input{
+    border: #769FCD;
+}
+
+img{
+    height: 70px;
+}
+
+#logo{
+    height: 50px ;
+    padding: 0ch;
+    margin: 10px;
+
+}
+
+tr:hover{
+    font-weight: lighter;
+}
+/*
+ 未解决的问题：
+ 1.table1 不能顶到最左边
+ ————修改logo的margin后table1也变化。。。应该是logo压榨了空间
+ 2.table的边框设置在css中无效
+ 3.table的边框如何做到单线条以及圆角
+ 4.div的对齐有丢丢奇怪
+ 5.container无法100%？
+ 注意：
+ 改了img之后，logo也会相应变大
+ */
+
+
+
+
+
+
+
