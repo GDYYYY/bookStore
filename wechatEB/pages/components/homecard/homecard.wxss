@@ -1,0 +1,26 @@
+page{
+  background-color:ghostwhite;
+}
+.homecard{
+  width: 9rem;
+  height:14rem;
+  text-align:center;
+  background-color: #fff;
+  border-radius: 5rpx;
+  margin-top: 30rpx;
+  overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+#book_name{
+  font-size: 30rpx;
+  font-weight: 600;
+}
+#author_name{
+  font-size: 25rpx;
+  color: gainsboro;
+}
+#price{
+  font-size: 30rpx;
+  color: #1989fa;
+}
