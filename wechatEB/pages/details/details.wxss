@@ -1,0 +1,45 @@
+page{
+  background-color:ghostwhite;
+}
+.details{
+  text-align:center;
+  background-color: #fff;
+  border-radius: 5rpx;
+  margin: 30rpx;
+  overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    /* flex-direction: column; */
+}
+van-image{
+  padding: 50rpx;
+}
+.detail text{
+  margin: 50rpx;
+}
+#info{
+  width: 17rem;
+  margin-left: 1.5rem;
+}
+#book_name{
+  font-weight: 700;
+  font-size: 35rpx;
+}
+#author_name{
+  font-size: 30rpx;
+  color: rgb(96, 125, 163);
+}
+#price{
+  font-size: 50rpx;
+  color: #1989fa;
+  float: left;
+}
+#desc{
+  font-size: 35rpx;
+}
+#s{
+  margin:0rpx;
+}
+#s text{
+color: #1989fa;
+}
