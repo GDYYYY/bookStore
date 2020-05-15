@@ -1,0 +1,13 @@
+<van-toast id="van-toast" />
+<view >
+  <view id="userin">
+    <van-cell-group>
+      <van-field  label="用户名"  bind:change="getName" />
+      <van-field password="true" label="密码" bind:change="getCode" />
+    </van-cell-group>
+  </view>
+  <view class="center">
+      <van-button plain type="info" bindtap="signIn" id="signin">登录</van-button>
+      <van-button plain type="info" bindtap="signUp" id="signup">注册</van-button>
+  </view>
+</view>

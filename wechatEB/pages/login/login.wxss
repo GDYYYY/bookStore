@@ -1,0 +1,23 @@
+page{
+  background-color:ghostwhite;
+}
+
+#userin {
+  margin-top: 7rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.center{
+  margin-top: 2rem;
+  margin-left: 3.5rem;
+}
+/* .center text{
+  margin:0rpx;
+  padding:0rpx;
+} */
+van-button {
+  width: 6rem;
+  margin-left: 2rem;
+  /* height: 3rem; */
+}
