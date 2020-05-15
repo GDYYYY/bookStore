@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "homecard": "../components/homecard/homecard",
+    "van-sticky": "@vant/weapp/sticky/index"
+  }
+}
