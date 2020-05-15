@@ -1,0 +1,24 @@
+
+<view class="user">
+	<view wx:if="{{isLog}}" id="info">
+		<image id="avatar" src="{{user.userIcon.icon}}" wx:if="{{user.userIcon.icon}}"/>
+		<image id="avatar" src="../assets/x.jpg" wx:else/>
+		<text id="username">{{user.username}}</text>
+		<van-button id="log" color="linear-gradient(to right, #4bb0ff, #6149f6)" bindtap="Logout" size="small">
+			退出
+		</van-button>
+	</view>
+	<view wx:else id="info">
+		<text id="warn">请先登录</text>
+		<van-button id="log" color="linear-gradient(to right, #4bb0ff, #6149f6)" bindtap="toLog" size="small">
+			登录
+		</van-button>
+	</view>
+	<view wx:if="{{isLog}}" id="more">
+		<van-cell-group >
+			<van-cell title="购物车" is-link link-type="navigateTo" url="/pages/login/login" />
+			<van-cell title="过往订单" is-link link-type="navigateTo" url="/pages/login/login" />
+		</van-cell-group>
+	</view>
+
+</view>

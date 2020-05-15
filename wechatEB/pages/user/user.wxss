@@ -1,0 +1,42 @@
+page{
+  background-color:ghostwhite;
+}
+.user{
+  border-radius: 5rpx;
+  margin: 30rpx;
+  overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    /* flex-direction: column; */
+}
+view{
+  border-radius: 10rpx;
+}
+#avatar{
+  border-radius: 128rpx;
+  width: 128rpx;
+  height: 128rpx;
+}
+#warn{
+  margin: 50rpx;
+}
+#log{
+  float: right;
+  margin-right: 2rem;
+}
+#info{
+  background-color: #fff;
+  text-align:center;
+  width: 18.5rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  color: #0c4969;
+}
+#more{
+  margin-top: 1rem;
+}
+#username{
+  margin-left: 50rpx;
+  font-weight: 700;
+  font-size: 35rpx;
+}
