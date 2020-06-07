@@ -1,33 +1,56 @@
-#header{
+#header {
     font-style: italic;
     font-size: medium;
 }
 
-#table1{
+#table1 {
     border-radius: 5px;
     border: 1px;
     border-color: #769FCD;
-    
-}/*无用*/
 
-input{
+}
+
+/*无用*/
+
+input {
     border: #769FCD;
 }
 
-img{
+img {
     height: 70px;
 }
 
-#logo{
-    height: 50px ;
+#logo {
+    height: 50px;
     padding: 0ch;
     margin: 10px;
 
 }
 
-tr:hover{
+tr:hover {
     font-weight: lighter;
 }
+
+::-webkit-scrollbar {
+    width: 15px; /*滚动条宽度*/
+    height: 15px; /*滚动条高度*/
+    background-color:white;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    background-color: #D6E6F2;
+}
+
+/*定义滑块 内阴影+圆角*/
+::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
+    background-color: #B9D7EA; /*滚动条的背景颜色*/
+    opacity: 0.5;
+    border-radius: 5px;
+}
+
 /*
  未解决的问题：
  1.table1 不能顶到最左边
