@@ -1,0 +1,7 @@
+<van-card num="{{num}}"
+  price="{{price}}"
+  desc="{{author}}"
+  title="{{title}}"
+  thumb="{{ url }}"
+	centered="true"
+	/>
