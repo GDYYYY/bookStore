@@ -16,7 +16,6 @@
 	</view>
 	<view wx:if="{{isLog}}" id="more">
 		<van-cell-group >
-			<van-cell title="购物车" is-link link-type="navigateTo" url="/pages/login/login" />
 			<van-cell title="过往订单" is-link link-type="navigateTo" url="/pages/login/login" />
 		</van-cell-group>
 	</view>

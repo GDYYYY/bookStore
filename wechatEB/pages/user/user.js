@@ -7,13 +7,12 @@ Page({
   },
   onShow: function (options) {
     var that = this;
-    console.log("useid");
+    console.log("userid");
     this.setData({user:app.globalData.user});
     console.log(app.globalData.user.u_id);
     console.log(this.data.user.u_id);
     this.setData({isLog:app.globalData.isLog});
     this.setData({u_id:app.globalData.u_id});
-    // console.log(this.data.user.userIcon.icon);
     if(app.globalData.isLog)
     {that.data.user=app.globalData.user}
   },
@@ -31,5 +30,4 @@ Page({
       url: '../home/home'
     })
   },
-
 })
