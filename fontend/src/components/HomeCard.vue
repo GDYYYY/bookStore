@@ -6,6 +6,8 @@
 <!--            <p>{{'http://localhost:3000/details/'+id}}</p>-->
             <p id="book_name">{{title}}</p>
             <p id="author_name">{{author}}</p>
+            <p id="isbn_c" v-if="!isHome">ISBN:{{isbn}}</p>
+            <p id="stock" v-if="!isHome">stock:{{stock}}</p>
             <div class="bottom_clearfix">
                 <p id="price">￥{{price}}</p>
                 <el-button id="add_book" type="text" class="button" icon="el-icon-shopping-cart-2" @click="addCart()"></el-button>
@@ -19,7 +21,7 @@
 
     export default {
         name: "HomeCard",
-        props:["id"],
+        props:["id","isHome"],
         data() {
             return {
                 // fits: ['fill', 'contain', 'cover', 'none', 'scale-down'],
@@ -31,6 +33,8 @@
                 "u_id":"",
                 "b_id":"",
                 num:"",
+                isbn:'',
+                stock:''
                 //id:this.$route.params.id,
             }
         },
@@ -60,9 +64,11 @@
                 console.log(resp.data);
                 _this.author = resp.data.author;
                 _this.title = resp.data.name;
-                _this.url = resp.data.image;
+                if(resp.data.bookInfo)
+                _this.url = resp.data.bookInfo.image;
                 _this.price = resp.data.price;
-                // _this.details=resp.data.description;
+                _this.isbn=resp.data.isbn;
+                _this.stock=resp.data.stock;
             })
         },
     }

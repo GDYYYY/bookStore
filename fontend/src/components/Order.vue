@@ -1,68 +1,172 @@
 <template>
-<!--        <h1>我和Cart一样是被暂时抛弃的界面</h1>-->
-<!--        <el-row v-for="j in 3" :key="j">-->
-<!--            <el-col :span="7" v-for="i in 3" :key="i">-->
-<!--                <BookCard :id="3*(j-1)+i"></BookCard>-->
-<!--            </el-col>-->
-<!--&lt;!&ndash;            <BookCard :id="j"></BookCard>&ndash;&gt;-->
-<!--        </el-row>-->
-        <div >
-        <el-row v-for="(page,index) of pages" :key="index">
-            <el-col :span="11" v-for="(item,innerindex) of page" :key="item" :offset="innerindex" >
-                <div id="bCard">
-<!--                    <div style="float: left">-->
-<!--                        <el-checkbox ></el-checkbox>-->
-<!--                    </div>-->
-                    <BookCard :id="item" :disable="true"></BookCard>
+    <div>
+        <div style="margin-bottom: 20px">
+            <input v-model="target" placeholder="search.."
+                   style="width: 30%;height:35px;margin-left:2%;border: 1px #B9D7EA solid;border-radius: 5px;float: left"
+                   @keyup.enter="search()"
+                   ref="AdmInput" value={$target}>
+            <el-date-picker
+                    v-model="rangetime"
+                    type="datetimerange"
+                    format="yyyy-MM-dd HH:mm:ss"
+                    value-format="yyyy-MM-dd HH:mm:ss"
+                    :picker-options="pickerOptions"
+                    range-separator="至"
+                    start-placeholder="开始日期"
+                    end-placeholder="结束日期"
+                    align="right"
+            >
+            </el-date-picker>
+            <el-button style="margin-left: 10px" @click="filterForm">过滤</el-button>
+            <el-button @click="filterCancel">取消</el-button>
+        </div>
+        <div>
+            <el-row v-for="(it,index) of filterData" :key="index" :offset="index">
+                <div v-if="hackReset == true">
+                    <OrderForm :f_id="it.f_id" :time="it.time" :cost="it.cost"></OrderForm>
                 </div>
-            </el-col>
-        </el-row>
-
+            </el-row>
+        </div>
     </div>
-
 </template>
 
 <script>
-    //import axios from 'axios';
-    import BookCard from "@/components/BookCard.vue";
     import axios from "axios";
+    import OrderForm from "@/components/OrderForm";
 
     export default {
         name: "Order",
-        components: {BookCard},
+        components: {OrderForm},
+        inject: ["reload"],
         data() {
-            return{//我严重怀疑IDEA是智障，为什么{换个行就有bug
-                 //items:[{id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}, {id: 6}, {id: 7}, {id: 8}, {id: 9}]
-                "items":[],
-                "u_id":"0",
-                // checkList:[3],
-                // checkAll: false,
-                // isIndeterminate: true
+            return {//我严重怀疑IDEA是智障，为什么{换个行就有bug
+                formData: [],
+                filterData: [],
+                filterBook: [],
+                u_id: 0,
+                target: '',
+                isFilter: false,
+                isSearch: false,
+                hackReset: true,
+                pickerOptions: {
+                    shortcuts: [{
+                        text: '最近一周',
+                        onClick(picker) {
+                            const end = new Date();
+                            const start = new Date();
+                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+                            picker.$emit('pick', [start, end]);
+                        }
+                    }, {
+                        text: '最近一个月',
+                        onClick(picker) {
+                            const end = new Date();
+                            const start = new Date();
+                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+                            picker.$emit('pick', [start, end]);
+                        }
+                    }, {
+                        text: '最近三个月',
+                        onClick(picker) {
+                            const end = new Date();
+                            const start = new Date();
+                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+                            picker.$emit('pick', [start, end]);
+                        }
+                    }]
+                },
+                rangetime: ''
             }
         },
-        computed: {
-            pages () {
-                const pages = []
-                this.items.forEach((item, index) => {
-                    const page = Math.floor(index / 2) //2代表2条为一行
-                    if (!pages[page]) {
-                        pages[page] = []
-                    }
-                    pages[page].push(item)
-                })
-                return pages
-            }
-        },
-        created(){
-            const _this=this;
-            _this.u_id=sessionStorage.getItem("u_id");
+        created() {
+            const _this = this;
+            _this.u_id = sessionStorage.getItem("u_id");
             console.log(_this.u_id);
-            axios.get('http://localhost:8080/getOrders?u_id=' + _this.u_id.toString()).then(function (resp) {
+            axios.get('http://localhost:8080/getAllOrderForm?u_id=' + _this.u_id.toString()).then(function (resp) {
                 console.log(resp.data);
-                resp.data.forEach((belong)=>{
-                    _this.items.push(belong.b_id);
-                })
+                _this.formData = resp.data;
+                _this.formData.forEach((i) => {
+                    i.time=i.time.substr(0,10);
+                    axios.get('http://localhost:8080/getOrders?f_id=' + i.f_id.toString()).then(function (resp) {
+                        i.books = resp.data;
+                    });
+                });
+                _this.filterData = _this.formData;
+                // _this.formData = resp.data.reverse();
             })
+        },
+        methods: {
+            search() {
+                const _this = this;
+                _this.isSearch = true;
+                if (_this.target == null || _this.target == '') {
+                    _this.isSearch = false;
+                    _this.filterBook = [];
+                    if (_this.isFilter) _this.filterForm();
+                    else
+                        _this.filterData = _this.formData.reverse();
+                } else {
+                    axios.get('http://localhost:8080/getAdmTargets?target=' + _this.target).then(function (resp) {
+                        _this.filterBook = resp.data;
+                        console.log(resp.data);
+                        var newData = [];
+                        for (var f = 0; f < _this.filterData.length; f++) {
+                            var flag = false;
+                            console.log(_this.filterData[f]);
+                            for (var b = 0; b < _this.filterData[f].books.length; b++) {
+                                for (var i = 0; i < _this.filterBook.length; i++) {
+                                    if (_this.filterBook[i].b_id == _this.filterData[f].books[b].b_id) {
+                                        newData.push(_this.filterData[f]);
+                                        flag = true;
+                                        break;
+                                    }
+                                }
+                                if (flag) break;
+                            }
+                        }
+                        _this.filterData = newData;
+
+                        console.log("newdata");
+                        console.log(newData);
+                        if (_this.isFilter) _this.filterForm();
+                        else _this.forceUpdate();
+                    })
+                }
+
+            },
+            forceUpdate() {
+                this.hackReset = false;
+                // $nextTick 是在下次 DOM 更新完成后，在执行里面的函数，类似于回调
+                this.$nextTick(() => {
+                    this.hackReset = true;
+                });
+            },
+            filterForm() {
+                const _this = this;
+                _this.isFilter = true;
+                if (!_this.isSearch) _this.filterData = _this.formData.reverse();
+                var newData = [];
+                axios.get('http://localhost:8080/getByTime?t1=' + _this.rangetime[0] + '&t2=' + _this.rangetime[1]).then(function (resp) {
+                    console.log(resp.data);
+                    console.log(_this.u_id);
+                    for (var f = 0; f < _this.filterData.length; f++) {
+                        for (var i = 0; i < resp.data.length; i++)
+                            if (_this.filterData[f].f_id == resp.data[i].f_id)
+                                newData.push(_this.filterData[f]);
+                    }
+                    _this.filterData = newData;
+                    _this.forceUpdate();
+                });
+            },
+            filterCancel() {
+                const _this = this;
+                _this.isFilter = false;
+                _this.rangetime = [];
+                _this.filterData = _this.formData.reverse();
+                if (!_this.isSearch)
+                    _this.forceUpdate();
+                else _this.search();
+            }
         }
     }
 </script>

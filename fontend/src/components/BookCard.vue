@@ -16,7 +16,7 @@
                 <p id="book_name">{{title}}</p>
                 <p id="author_name">{{author}}</p>
                 <p id="price" style="margin: 0">￥{{price}}</p>
-                <el-input-number v-model="num" controls-position="right" size="mini" min="1" @change="sendNum()"
+                <el-input-number v-model="num" controls-position="right" size="mini" :min="1" @change="sendNum()"
                                  :disabled="disable" style="width: 80px;padding: 0;float: bottom"></el-input-number>
             </div>
         </div>
@@ -31,7 +31,7 @@
 
     export default {
         name: "BookCard",
-        props: ["id", "disable"],
+        props: ["id", "disable","f_id"],
         data() {
             return {
                 // fits: ['fill', 'contain', 'cover', 'none', 'scale-down'],
@@ -39,7 +39,7 @@
                 "title": "aaaaa",
                 "author": "zuzu",
                 "price": "36",
-                "num": "1",
+                "num": 1,
                 "tar": "http://localhost:3000/details/id",
                 "u_id":"0",
                 "b_id":"0"
@@ -67,7 +67,8 @@
                 console.log(resp.data);
                 _this.author = resp.data.author;
                 _this.title = resp.data.name;
-                _this.url = resp.data.image;
+                if(resp.data.bookInfo)
+                _this.url = resp.data.bookInfo.image;
                 _this.price = resp.data.price;
                 // _this.num=
                 // _this.details=resp.data.description;
@@ -79,7 +80,7 @@
                 // console.log(_this.num);
             })}
             else{
-                axios.get('http://localhost:8080/getONum?u_id='+_this.u_id+'&b_id='+_this.id).then(function (resp){
+                axios.get('http://localhost:8080/getONum?f_id='+_this.f_id+'&b_id='+_this.id).then(function (resp){
                     _this.num=resp.data.num;
                     // console.log(resp.data);
                     // console.log(_this.num);

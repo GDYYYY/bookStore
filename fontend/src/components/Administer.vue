@@ -1,11 +1,12 @@
 <template>
     <div style="width: 100%">
-        <!--    <el-button class="aside-btns" size="mini" @click="toggleEdit">Toggle Edit</el-button>-->
-        <el-input v-model="target" placeholder="请输入搜索内容" style="width: 70%" @input="search()"
-                  ref="AdmInput" value={$target}></el-input>
-        <el-button class="aside-btns" size="mini" @click="addRow">Add Row</el-button>
-        <el-button class="aside-btns" size="mini" @click="delRow">Delete Row</el-button>
-        <!--        <el-button class="aside-btns" size="mini" @click="toggleSelect">Select</el-button>-->
+        <div style="margin-bottom: 20px">
+            <input v-model="target" placeholder="search.."
+                   style="width: 70%;height: 35px;border: 1px #B9D7EA solid;border-radius: 5px" @keyup.enter="search()"
+                   ref="AdmInput" value={$target}>
+            <el-button class="aside-btns" @click="addRow">Add Book</el-button>
+            <el-button class="aside-btns" @click="delRow">Delete Book</el-button>
+        </div>
         <el-table
                 ref="multipleTable"
                 :data="params.tableData"
@@ -14,62 +15,136 @@
                 height="700"
                 stripe
                 @select="handleChange"
-                style="width: 100%">
-            <el-table-column align="center" type="selection" width="50" fixed="left" v-model="multipleSelection"  >
-<!--                <template slot-scope="scope">-->
-<!--                    <el-checkbox @select="handleChange(scope.row)"></el-checkbox>-->
-<!--                </template>-->
+                style="width: 100%;">
+            <el-table-column align="center" type="selection" width="25" fixed="right" v-model="multipleSelection">
+            </el-table-column>
+            <el-table-column
+                    prop="onshelf"
+                    label="状态"
+                    width="120"
+                    align="center">
+                <template slot-scope="scope">
+                    <template v-if="scope.row.is_edit">
+                        <el-select v-model="scope.row.onshelf">
+                            <el-option
+                                    v-for="item in options"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </template>
+                    <template v-else>
+                        <span>{{ shelf[scope.row.onshelf]}}</span>
+                    </template>
+                </template>
             </el-table-column>
             <el-table-column
                     prop="title"
                     label="书名"
-                    width="180">
-<!--                <template slot-scope="scope">-->
-<!--                    <template v-if="scope.row.is_edit">-->
-<!--                        <input v-model="scope.row.copy.name" />-->
-<!--                        <el-button size="mini" @click="scope.row.save">save</el-button>-->
-<!--                        <el-button size="mini" @click="scope.row.is_edit = false">cancel</el-button>-->
-<!--                    </template>-->
-<!--                    <template v-else>-->
-<!--                        <span @click="scope.row.show_edit">{{ scope.row.origin.name }}</span>-->
-<!--                    </template>-->
-<!--                </template>-->
+                    width="160">
+                <template slot-scope="scope">
+                    <template v-if="scope.row.is_edit">
+                        <input v-model="scope.row.name" style="width: 90%"/>
+                        <!--                        <el-button size="mini" @click="scope.row.is_edit = false">cancel</el-button>-->
+                    </template>
+                    <template v-else>
+                        <span>{{ scope.row.name }}</span>
+                    </template>
+                </template>
             </el-table-column>
             <el-table-column
                     prop="author"
                     label="作者"
-                    width="180">
+                    width="120">
+                <template slot-scope="scope">
+                    <template v-if="scope.row.is_edit">
+                        <input v-model="scope.row.author" style="width: 80%"/>
+                        <!--                        <el-button size="mini" @click="scope.row.is_edit = false">cancel</el-button>-->
+                    </template>
+                    <template v-else>
+                        <span>{{ scope.row.author }}</span>
+                    </template>
+                </template>
             </el-table-column>
             <el-table-column
                     prop="isbn"
-                    label="ISBN">
+                    label="ISBN"
+                    width="160">
+                <template slot-scope="scope">
+                    <template v-if="scope.row.is_edit">
+                        <input v-model="scope.row.isbn" style="width: 90%"/>
+                    </template>
+                    <template v-else>
+                        <span>{{ scope.row.isbn }}</span>
+                    </template>
+                </template>
             </el-table-column>
-
             <el-table-column
                     prop="price"
-                    label="价格">
+                    label="价格"
+                    width="100">
+                <template slot-scope="scope">
+                    <template v-if="scope.row.is_edit">
+                        <input v-model="scope.row.price" style="width: 80%"/>
+                    </template>
+                    <template v-else>
+                        <span>{{ scope.row.price}}</span>
+                    </template>
+                </template>
             </el-table-column>
             <el-table-column
                     prop="stock"
-                    label="库存">
+                    label="库存"
+                    width="100">
+                <template slot-scope="scope">
+                    <template v-if="scope.row.is_edit">
+                        <input v-model="scope.row.stock" style="width: 80%"/>
+                    </template>
+                    <template v-else>
+                        <span>{{ scope.row.stock }}</span>
+                    </template>
+                </template>
             </el-table-column>
             <el-table-column
                     prop="image"
-                    label="图片"
-                    width="350">
+                    label="封面"
+                    width="100">
+                <template slot-scope="scope">
+                    <template v-if="scope.row.is_edit">
+                        <ImgUp :tpye="0" v-model="scope.row.bookInfo.image"></ImgUp>
+                    </template>
+                    <template v-else>
+                        <img :src="scope.row.bookInfo.image" min-width="70" height="70">
+                    </template>
+                </template>
             </el-table-column>
             <el-table-column
                     prop="description"
                     label="简介"
                     width="350">
+                <template slot-scope="scope">
+                    <template v-if="scope.row.is_edit">
+                        <textarea v-model="scope.row.description" style="width: 90%;height: 100px;border:1px #D6E6F2 solid;border-radius:5px;color: #769FCD;"/>
+                    </template>
+                    <template v-else>
+                        <span>{{ scope.row.description }}</span>
+                    </template>
+                </template>
             </el-table-column>
             <el-table-column
                     fixed="right"
                     label="操作"
-                    width="140">
+                    align="center"
+                    width="180">
                 <template slot-scope="scope">
-                    <el-button @click="handleDetails(scope.row)" type="text" size="small">查看详情</el-button>
-                    <el-button @click="handleEdit(scope.row)" size="small">{{params.msg}}</el-button>
+                    <el-button @click="handleDetails(scope.row)" v-if="!scope.row.is_edit" type="text" size="small">
+                        查看详情
+                    </el-button>
+                    <el-button @click="handleCancel(scope.row)" v-else size="small">取消</el-button>
+                    <el-button @click="handleSave(scope.row)" v-if="scope.row.is_edit" size="small">保存</el-button>
+                    <el-button @click="handleEdit(scope.row)" v-else size="small">编辑</el-button>
+
                 </template>
             </el-table-column>
         </el-table>
@@ -78,36 +153,50 @@
 
 <script>
     import axios from "axios";
+    import ImgUp from "@/components/ImgUp";
 
     export default {
+        components: {ImgUp},
         inject: ["reload"],
         name: 'Demo',
         data() {
             return {
                 params: {
                     tableData: [],
-                    target: '',
-                    msg:"编辑"
                 },
-                multipleSelection: []
+                target: null,
+                multipleSelection: [],
+                options: [{
+                    value: '0',
+                    label: '未上架'
+                }, {
+                    value: '1',
+                    label: '已上架'
+                }],
+                shelf: ['未上架', '已上架']
             }
         },
         created() {
             const _this = this;
-            _this.target = sessionStorage.getItem("target");
+            _this.target = sessionStorage.getItem("target1");
             if (_this.target == null) {
                 axios.get('http://localhost:8080/getBooks').then(function (resp) {
                     console.log(resp.data);
                     resp.data.forEach((item) => {
+                        var img = null;
+                        if (item.bookInfo)
+                            img = item.bookInfo.image;
                         _this.params.tableData.push({
-                            title: item.name,
+                            name: item.name,
+                            onshelf: item.onshelf,
                             author: item.author,
                             price: item.price,
                             isbn: item.isbn,
                             stock: item.stock,
                             description: item.description,
-                            image:item.image,
+                            bookInfo: {image: img},
                             b_id: item.b_id,
+                            is_edit: false
                         });
                     })
                 })
@@ -116,53 +205,40 @@
                     _this.params.tableData = [];
                     console.log(resp.data);
                     resp.data.forEach((item) => {
+                        var img = null;
+                        if (item.bookInfo)
+                            img = item.bookInfo.image;
                         _this.params.tableData.push({
-                            title: item.name,
+                            name: item.name,
                             author: item.author,
                             price: item.price,
                             isbn: item.isbn,
+                            onshelf: item.onshelf,
                             stock: item.stock,
-                            image:item.image,
+                            bookInfo: {image: img},
                             description: item.description,
                             b_id: item.b_id,
+                            is_edit: false
                         });
                     })
                 })
             }
         },
-        // computed: {
-        //     filterData: function () {
-        //         var input = this.target && this.target.toLowerCase();
-        //         var items = this.params.tableData;
-        //         var items1;
-        //         if (input) {
-        //             items1 = items.filter(function (item) {
-        //                 return Object.keys(item).some(function (key1) {
-        //                     return String(item[key1])
-        //                         .toLowerCase()
-        //                         .match(input);
-        //                 });
-        //             });
-        //         } else {
-        //             items1 = items;
-        //         }
-        //         // this.$forceUpdate();
-        //         return items1;
-        //     }
-        // },
         watch: {
             target(data) {
                 console.log(data);
             },
-            multipleSelection(data){
-                // console.log("aaaa1");
+            multipleSelection(data) {
                 console.log(data);
+            },
+            $nextTick(){
+                this.$refs.multipleTable.doLayout()
             }
         },
         methods: {
-            handleChange(selection,row){
+            handleChange(selection, row) {
                 console.log(row);
-                this.multipleSelection=selection;
+                this.multipleSelection = selection;
             },
             search() {
                 this.$forceUpdate();
@@ -170,11 +246,31 @@
                     this.$refs.AdmInput.focus();
                 });
                 const _this = this;
-                sessionStorage.setItem('target', this.target);
+                sessionStorage.setItem('target1', this.target);
                 _this.reload();
             },
             handleEdit(index, row) {
-
+                index.is_edit = true;
+                // this.reload();
+                console.log(index, row);
+            },
+            handleCancel(index, row) {
+                index.is_edit = false;
+                this.reload();
+                console.log(index, row)
+            },
+            handleSave(index, row) {
+                // const _this=this;
+                index.is_edit = false;
+                var img = sessionStorage.getItem("newImg");
+                console.log(img);
+                if (img != null)
+                    index.bookInfo.image = img;
+                console.log(index);
+                axios.post('http://localhost:8080/updateBook', index).then(function (resp) {
+                    console.log(resp);
+                    sessionStorage.removeItem("newImg");
+                });
                 console.log(index, row)
             },
             handleDetails(index, row) {
@@ -192,71 +288,13 @@
             delRow() {
                 const _this = this;
                 console.log("start");
-                _this.multipleSelection.forEach((book)=>{
-                axios.get('http://localhost:8080/delBook?b_id='+book.b_id).then(function (resp) {
-                    console.log(resp);
-                    _this.reload();
-                })})
-            }
-
-            // onCellChange(rowIndex, columnIndex, data) {
-            //     console.log('onCellChange: ', rowIndex, columnIndex, data)
-            //     console.log('table data: ', this.$refs.table.getData())
-            //     this.params.data[rowIndex][columnIndex] = data
-            // },
-            // toggleSelect() {
-            //     this.params.showCheck = !this.params.showCheck
-            // },
-            // onSelect(isChecked, index, data) {
-            //     console.log('onSelect: ', isChecked, index, data)
-            //     console.log('Checked Data:', this.$refs.table.getCheckedRowDatas(true))
-            // },
-            // onSelectionChange(checkedDatas, checkedIndexs, checkedNum) {
-            //     console.log('onSelectionChange: ', checkedDatas, checkedIndexs, checkedNum)
-            // },
-            // addRow() {
-            //     let rowNum = this.params.data.length
-            //     let columnNum = this.params.data[0].length
-            //
-            //     if (rowNum >= 200) {
-            //         return this.showMsg('warning', 'The number of rows cannot be more than 200.')
-            //     }
-            //
-            //     let newRow = [rowNum]
-            //     // newRow.push(this.rowIndex)
-            //     for (let i = 1; i < columnNum; i++) {
-            //         newRow.push(`new-Cell`)
-            //     }
-            //
-            //     this.params.data.push(newRow)
-            // },
-            // getIndexByData(val) {
-            //     for (var i = 0; i < this.params.data.length; i++) {
-            //         if (this.params.data[i][0] == val[0]) {
-            //             return i;
-            //         }
-            //     }
-            //     return -1;
-            // },
-            // deleteRow() {
-            //     for (let i = 0; i < this.$refs.table.getCheckedRowDatas().length; i++) {
-            //         this.params.data.splice(this.getIndexByData(this.$refs.table.getCheckedRowDatas()[i]), 1)
-            //     }
-            //     // let rowNum = this.params.data.length
-            //     // if (rowNum <= 1) {
-            //     //     return this.showMsg('warning', 'The number of rows cannot be less than 1.')
-            //     // }
-            //     //
-            //     // this.params.data.pop()
-            // },
-
-            // format (val) {
-            //     if (val.indexOf(this.search) !== -1 && this.search !== '') {
-            //         return val.replace(this.search, '<font color="red">' + this.search + '</font>')
-            //     } else {
-            //         return val
-            //     }
-            // }
+                _this.multipleSelection.forEach((book) => {
+                    axios.get('http://localhost:8080/delBook?b_id=' + book.b_id).then(function (resp) {
+                        console.log(resp);
+                        _this.reload();
+                    })
+                })
+            },
         },
     }
 </script>
@@ -264,6 +302,12 @@
     @import "../assets/css2.css";
     @import "../assets/css1.css";
 
+    input {
+        font-style: normal;
+    }
+    body .el-table th.gutter{
+        display: table-cell!important;
+    }
     #content {
         margin-top: 0;
     }

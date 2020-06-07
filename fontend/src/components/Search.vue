@@ -20,34 +20,24 @@
         // props:["target"],
         data () {
             return {
-                "List":[],
                 "ShowList":[],
-                "target":' ',
+                "target":null,
             }
         },
         computed: {
             pages() {
-                const pages = []
+                const pages = [];
                 this.ShowList.forEach((item, index) => {
-                    const page = Math.floor(index / 3)  //2代表2条为一行
+                    const page = Math.floor(index / 3) ; //3代表3条为一行
                     if (!pages[page]) {
                         pages[page] = []
                     }
                     pages[page].push(item)
-                })
+                });
                 return pages
             },
         },
         watch:{
-            List(data){
-                console.log("list:");
-                console.log(data);
-            },
-            // target(item){
-            //     if(this.target==null||this.target=='') return;
-            //     this.ShowList=[];
-            //     this.ShowList.push(item);
-            // },
             ShowList(data){
                 console.log("show:");
                 console.log(data);
@@ -57,13 +47,24 @@
         created(){
             const  _this = this;
             // console.log(1);
-            _this.target=sessionStorage.getItem("target");
-            // console.log("t0:");
+            var t=sessionStorage.getItem("target");
+            if(t!=null)
+            _this.target=t;
             console.log(_this.target);
+            if(_this.target!=null)
             axios.get('http://localhost:8080/getTargets?target='+_this.target.toString()).then(function (resp) {
                 console.log(resp.data);
                 resp.data.forEach((item)=>{
+                    if(item.onshelf==1)
                     _this.ShowList.push([item.b_id]);
+                })
+            });
+            else
+            axios.get('http://localhost:8080/getBooks').then(function (resp) {
+                console.log(resp.data);
+                resp.data.forEach((item)=>{
+                    if(item.onshelf==1)
+                        _this.ShowList.push([item.b_id]);
                 })
             });
             // console.log(_this.List);

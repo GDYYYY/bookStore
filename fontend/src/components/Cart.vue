@@ -36,7 +36,7 @@
 
     export default {
         components: {BookCard},
-        //props:["total"],
+        inject: ["reload"],
         data() {
             return {
                 "items": [],
@@ -55,14 +55,14 @@
         },
         computed: {
             pages() {
-                const pages = []
+                const pages = [];
                 this.items.forEach((item, index) => {
-                    const page = Math.floor(index / 2)  //2代表2条为一行
+                    const page = Math.floor(index / 2);  //2代表2条为一行
                     if (!pages[page]) {
                         pages[page] = []
                     }
                     pages[page].push(item)
-                })
+                });
                 return pages
             },
         },
@@ -78,16 +78,21 @@
             buyBook() {
                 var c_id;
                 var num = 1;
+                var f_id=0;
                 const _this = this;
-                alert("购买成功！");
-                _this.checkList.forEach((item) => {
-                    axios.get('http://localhost:8080/getNum?u_id=' + _this.u_id.toString() + '&b_id=' + item).then(function (resp) {
-                        c_id = resp.data.id;
-                        num = resp.data.num;
-                        axios.post('http://localhost:8080/addOrders?u_id=' + _this.u_id + '&num=' + num + '&b_id=' + item).then();
-                        axios.post('http://localhost:8080/delCart?id=' + c_id.toString()).then();//delete
+                axios.get('http://localhost:8080/newForm?u_id='+ _this.u_id.toString()+'&cost='+_this.total).then(function (resp) {
+                    f_id=resp.data.f_id;
+                    _this.checkList.forEach((item) => {
+                        axios.get('http://localhost:8080/getNum?u_id=' + _this.u_id.toString() + '&b_id=' + item).then(function (resp) {
+                            c_id = resp.data.id;
+                            num = resp.data.num;
+                            axios.post('http://localhost:8080/addOrders?f_id=' + f_id + '&num=' + num + '&b_id=' + item).then();
+                            axios.post('http://localhost:8080/delCart?id=' + c_id.toString()).then(_this.reload());//delete
+                        });
                     });
-                })
+                });
+                alert("购买成功！");
+                _this.reload();
             },
             recheck() {
                 const _this = this;
