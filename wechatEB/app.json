@@ -3,7 +3,8 @@
     "pages/home/home", 
     "pages/login/login",
     "pages/details/details",
-    "pages/user/user"
+    "pages/user/user",
+    "pages/cart/cart"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -32,7 +33,7 @@
         "selectedIconPath":"/pages/assets/icon-home.png"
       },      
       {
-        "pagePath": "pages/user/user",      
+        "pagePath": "pages/cart/cart",      
         "text": "购物车",
         "iconPath":"/pages/assets/icon-cart.png",
         "selectedIconPath":"/pages/assets/icon-cart.png"
