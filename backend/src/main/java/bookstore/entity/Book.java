@@ -8,8 +8,6 @@ import org.hibernate.annotations.GenericGenerator;
 
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Data
 @Entity
@@ -18,8 +16,6 @@ import java.util.Set;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "b_id")
 public class Book {
 
-    @Id
-    @Column(name = "b_id")
     private int b_id;
 
     public String isbn;
@@ -28,7 +24,28 @@ public class Book {
     public Double price;
     public String description;
     public int stock;
-    public String image;
+    public int onshelf;
+
+
+    public BookInfo bookInfo;
+    @Transient
+    public BookInfo getBookInfo(){
+        return bookInfo;
+    }
+
+    public void setBookInfo(BookInfo bookInfo) {
+        this.bookInfo = bookInfo;
+    }
+
+//    private BookDetail description;
+//    @Transient
+//    public BookDetail getDescription(){
+//        return description;
+//    }
+//
+//    public void setDescription(BookDetail description) {
+//        this.description = description;
+//    }
 
     @Id
     @GeneratedValue(generator = "increment")
@@ -45,39 +62,11 @@ public class Book {
 
     public void setAuthor(String author){this.author=author;}
     public void setName(String name){this.name=name;}
+    public void setOnshelf(Integer onshelf){this.onshelf=onshelf;}
     public void setDescription(String description){this.description=description;}
     public void setIsbn(String isbn){this.isbn=isbn;}
-    public void setImage(String image){this.image=image;}
     public void setStock(Integer stock){this.stock=stock;}
+    public int getStock(){return this.stock;}
 
-//    private Set<User> wanter=new HashSet<>();
-//    private Set<User> buyer=new HashSet<>();
-//
-//    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE},fetch = FetchType.EAGER)
-//    @JoinTable(
-//            name="cart",
-//            joinColumns = @JoinColumn(name="b_id",referencedColumnName = "b_id"),
-//            inverseJoinColumns = @JoinColumn(name="u_id",referencedColumnName = "u_id")
-//
-//    )
-//    public Set<User> getWanter(){
-//        return wanter;
-//    }
-//    public void setWanter(Set<User> wanter){
-//        this.wanter = wanter;
-//    }
 
-//    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE},fetch = FetchType.EAGER)
-//    @JoinTable(
-//            name="orders",
-//            joinColumns = @JoinColumn(name="b_id",referencedColumnName = "b_id"),
-//            inverseJoinColumns = @JoinColumn(name="u_id",referencedColumnName = "u_id")
-//
-//    )
-//    public Set<User> getBuyer(){
-//        return buyer;
-//    }
-//    public void setBuyer(Set<User> buyer){
-//        this.buyer = buyer;
-//    }
 }

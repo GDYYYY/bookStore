@@ -5,8 +5,7 @@ import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+
 
 @Data
 @Entity
@@ -20,6 +19,17 @@ public class User {
     public String username;
     public String email;
     public String password;
+    
+    private UserIcon userIcon;
+    @Transient
+    public UserIcon getUserIcon(){
+        return userIcon;
+    }
+
+    public void setUserIcon(UserIcon userIcon) {
+        this.userIcon = userIcon;
+    }
+
 
     @Id
     @GeneratedValue(generator = "increment")
@@ -44,22 +54,5 @@ public class User {
         this.password=password;
     }
 
-//    public List<Book> wants=new ArrayList<>();
-//    private List<Book> belongs=new ArrayList<>();
-//
-//    @ManyToMany(mappedBy = "wanter",fetch = FetchType.EAGER)
-//    public List<Book> getWants(){
-//        return wants;
-//    }
-//    public void setWants(List<Book> wants){
-//        this.wants=wants;
-//    }
 
-//    @ManyToMany(mappedBy = "buyer",fetch = FetchType.EAGER)
-//    public List<Book> getBelongs(){
-//        return belongs;
-//    }
-//    public void setBelongs(List<Book> belongs){
-//        this.belongs=belongs;
-//    }
 }
