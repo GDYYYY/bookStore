@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.reins.bookstore.entity.User;
-import java.util.ArrayList;
+
 import java.util.List;
 
 @RestController
@@ -17,8 +17,14 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @RequestMapping("/getUsers")
+    public List<User> getBooks() {
+        return userService.getUsers();
+    }
+
     @RequestMapping("/login")
     public User ifUser(@RequestBody User user){
+        System.out.println(user.password);
         return userService.ifUser(user.username, user.password);
     }
 
@@ -26,9 +32,14 @@ public class UserController {
     public User setUser(@RequestBody User user){
         return userService.setUser(user.username, user.password,user.email,user.role);
     }
+    @RequestMapping("/updateUser")
+    public User updateUser(@RequestBody User user){
+        System.out.println(user.role);
+        return userService.updateUser(user);
+    }
 
-//    @RequestMapping("/getCart")
-//    public List<Book> getCart(@RequestParam("u_id") Integer u_id){
-//        return userService.getCart(u_id);
-//    }
+    @RequestMapping("/getuser")
+    public User getUser(@RequestParam("u_id") Integer u_id){
+        return userService.getUser(u_id);
+    }
 }

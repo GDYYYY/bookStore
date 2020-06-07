@@ -16,17 +16,22 @@ public class OrdersController {
     private OrdersService ordersService;
 
     @RequestMapping("/getOrders")
-    public List<Orders> getBelongs(@RequestParam("u_id") Integer u_id) {
-        return ordersService.getBelongs(u_id);
+    public List<Orders> getBelongs(@RequestParam("f_id") Integer f_id) {
+        return ordersService.getBelongs(f_id);
+    }
+
+    @RequestMapping("/getAllOrders")
+    public List<Orders> getAll() {
+        return ordersService.getAll();
     }
 
     @RequestMapping("/getONum")
-    public Orders getOne(@RequestParam("u_id") Integer u_id,@RequestParam("b_id") Integer b_id){
-        return ordersService.findOrdersById(u_id,b_id);
+    public Orders getOne(@RequestParam("f_id") Integer f_id,@RequestParam("b_id") Integer b_id){
+        return ordersService.findOrdersById(f_id,b_id);
     }
 
     @RequestMapping("/addOrders")
-    public Orders addOne(@RequestParam("u_id") Integer u_id, @RequestParam("b_id") Integer b_id, @RequestParam("num") Integer num){
-        return ordersService.addOne(u_id, b_id,num);
+    public Orders addOne(@RequestParam("f_id") Integer f_id, @RequestParam("b_id") Integer b_id, @RequestParam("num") Integer num){
+        return ordersService.addOne(f_id, b_id,num);
     }
 }
