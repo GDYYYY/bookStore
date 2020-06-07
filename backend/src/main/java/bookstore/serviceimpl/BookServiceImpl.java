@@ -22,17 +22,28 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book setBook(){
-        return bookDao.setBook();
+        Book book = new Book();
+        book.setName("bookname");
+        book.setAuthor("author");
+//        book.setDescription("null");
+        book.setPrice(999.9);
+        book.setStock(0);
+        book.setOnshelf(0);
+//        book.setIsbn("null");
+        System.out.println(111);
+        return bookDao.saveBook(book);
     }
 
     @Override
     public Book updateBook(Book b){
-        return bookDao.updateBook(b);
+        return bookDao.saveBook(b);
     }
 
     @Override
     public Book delBook(Integer b_id) {
-        return bookDao.delBook(b_id);
+        Book cur = new Book();
+        cur.setB_id(b_id);
+        return bookDao.delBook(cur);
     }
 
     @Override
