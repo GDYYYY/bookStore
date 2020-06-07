@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "bookcard": "../components/bookcard/bookcard",
+    "van-sticky": "@vant/weapp/sticky/index"
+  }
+}

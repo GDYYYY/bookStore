@@ -1,0 +1,10 @@
+<view>
+	<view wx:if="{{isLog}}" >
+		<block wx:for="{{books}}" wx:for-item="book">
+      <bookcard b_id="{{book.b_id}}" num="{{book.num}}" bindtap="toDetails" data-b_id="{{book.b_id}}"></bookcard>
+		</block>
+	</view>
+	<view wx:else id="info">
+		<text id="warn">你还没有登录哦~</text>
+	</view>
+</view>
