@@ -15,26 +15,29 @@
                 </router-link>
             </div>
             <div id="log">
-                <router-link to="/login" :isLog="isLog">{{message}}</router-link>
+                <router-link to="/login" :isLog="isLog" v-if="isLog"><el-avatar :src="icon"></el-avatar></router-link>
+                <router-link to="/login" :isLog="isLog" v-if="!isLog">{{message}}</router-link>
             </div>
         </div>
         <div>
-            <div id="meun">
+            <div id="meun" style="padding-top: 20px;padding-bottom: 10px">
                 <!-- router-link 定义点击后导航到哪个路径下 -->
                 <router-link to="/home">Home</router-link>
                 <br/>
-                <router-link to="/cart">Cart</router-link>
+                <router-link v-if="isLog" to="/cart">Cart</router-link>
+                <router-link v-if="!isLog" to="/login">Cart</router-link>
                 <br/>
-                <router-link to="/order">Order</router-link>
+                <router-link v-if="isLog" to="/order">Order</router-link>
+                <router-link v-if="!isLog" to="/login">Order</router-link>
                 <br/>
                 <router-link to="/all">All</router-link>
                 <br/>
-                <router-link to="/administer" v-if="isAdm>0">Administer</router-link>
+                <router-link to="/administer" v-if="isAdm>0">AdmBook</router-link>
                 <br/>
-                <!--  增加两个到user组件的导航，可以看到这里使用了不同的to属性 -->
-                <!--           <router-link to="/user/123">User123</router-link>-->
-                <!--           <br/>-->
-                <!--           <router-link to="/user/456">User456</router-link>-->
+                <router-link to="/admUser" v-if="isAdm>0">AdmUser</router-link>
+                <br/>
+                <router-link to="/admOrder" v-if="isAdm>0">AdmOrder</router-link>
+                <br/>
             </div>
             <div id="view">
                 <router-view v-if="isRouterAlive"></router-view>
@@ -51,7 +54,8 @@
                 "message": "login",
                 "isLog": false,
                 "isAdm": false,
-                "target": "",
+                "target": " ",
+                "icon":"",
                 isRouterAlive :true,
                 tar: ''
             }
@@ -65,6 +69,7 @@
             const _this = this;
             _this.message = sessionStorage.getItem("username");
             _this.target = sessionStorage.getItem("target");
+            _this.icon = sessionStorage.getItem("icon");
             if (_this.message == null) _this.message = "login";
             else {
                 _this.isLog = true;
@@ -89,7 +94,7 @@
                 location.href = this.tar;
             },
             reload() {
-                this.isRouterAlive = false
+                this.isRouterAlive = false;
                 this.$nextTick(function () {
                     this.isRouterAlive = true
                 })

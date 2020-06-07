@@ -1,31 +1,30 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import VueTableDynamic from 'vue-table-dynamic'
+// import VueTableDynamic from 'vue-table-dynamic'
 import ElementUI from "element-ui";
 import 'element-ui/lib/theme-chalk/index.css';
 // 引入组件
 import home from "./components/Home.vue";
 import cart from "./components/Cart.vue";
-import user from "./components/User.vue";
 import order from "./components/Order.vue";
 import login from "./components/Login.vue";
 import signup from "./components/SignUp.vue";
 import administer from "./components/Administer.vue";
+import admUser from "./components/AdmUser.vue";
+import admOrder from "./components/AdmOrder.vue";
 import details from "./components/Details.vue";
 import all from "./components/All.vue";
 import search from "./components/Search.vue";
 
 // 要告诉 vue 使用 vueRouter
 Vue.use(VueRouter);
-Vue.use(VueTableDynamic);
+// Vue.use(VueTableDynamic);
 Vue.use(ElementUI);
 const routes = [
 
     {
         path:"/home",
-        // 下面这个属性也不少，因为，我们是先进入home页面，才能进入子路由
         component: home,
-        // 子路由
     },
     {
         path: "/cart",
@@ -47,15 +46,6 @@ const routes = [
         path: "/signup",
         component: signup,
     },
-    // {
-    //     path: "/navmenu",
-    //     component: navmenu,
-    // },
-    // {
-    //     path: "/vuebutton",
-    //     component: vuebutton,
-    // },
-
     {
         path: "/login",
         component: login,
@@ -68,10 +58,13 @@ const routes = [
         path: "/administer",
         component:administer,
     },
-    /*新增user路径，配置了动态的id*/
     {
-        path: "/user/:id",
-        component: user
+        path: "/admUser",
+        component:admUser,
+    },
+    {
+        path: "/admOrder",
+        component:admOrder,
     },
     // 重定向
     {
