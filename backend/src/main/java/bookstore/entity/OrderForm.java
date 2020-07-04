@@ -8,6 +8,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -50,34 +52,4 @@ public class OrderForm {
         this.cost = cost;
     }
 
-//    private Set<User> wanter=new HashSet<>();
-//    private Set<User> buyer=new HashSet<>();
-//
-//    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE},fetch = FetchType.EAGER)
-//    @JoinTable(
-//            name="cart",
-//            joinColumns = @JoinColumn(name="b_id",referencedColumnName = "b_id"),
-//            inverseJoinColumns = @JoinColumn(name="u_id",referencedColumnName = "u_id")
-//
-//    )
-//    public Set<User> getWanter(){
-//        return wanter;
-//    }
-//    public void setWanter(Set<User> wanter){
-//        this.wanter = wanter;
-//    }
-
-//    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE},fetch = FetchType.EAGER)
-//    @JoinTable(
-//            name="orders",
-//            joinColumns = @JoinColumn(name="b_id",referencedColumnName = "b_id"),
-//            inverseJoinColumns = @JoinColumn(name="u_id",referencedColumnName = "u_id")
-//
-//    )
-//    public Set<User> getBuyer(){
-//        return buyer;
-//    }
-//    public void setBuyer(Set<User> buyer){
-//        this.buyer = buyer;
-//    }
 }

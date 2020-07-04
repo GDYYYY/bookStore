@@ -19,6 +19,7 @@ public class Orders {
     @Column(name = "id")
     private int id;
     public int b_id;
+    public int u_id;
     public int f_id;
     public int num;
 
@@ -34,6 +35,8 @@ public class Orders {
 
     public int getB_id(){return b_id;}
     public void setB_id(Integer b_id){this.b_id=b_id;}
+    public int getU_id(){return u_id;}
+    public void setU_id(Integer u_id){this.u_id=u_id;}
     public int getF_id(){return f_id;}
     public void setF_id(Integer f_id){this.f_id=f_id;}
     public int getNum(){return num;}

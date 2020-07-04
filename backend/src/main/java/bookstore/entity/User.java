@@ -5,6 +5,8 @@ import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Data
@@ -53,6 +55,22 @@ public class User {
     public void setPassword(String password){
         this.password=password;
     }
-
+//
+//    private Set<OrderForm> forms=new HashSet<>();
+//
+//    @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE},fetch = FetchType.EAGER)
+//    @JoinTable(
+//            name="orderform",
+//            joinColumns = @JoinColumn(name="u_id",referencedColumnName = "u_id"),
+//            inverseJoinColumns = @JoinColumn(name="f_id",referencedColumnName = "f_id")
+//
+//    )
+//
+//    public Set<OrderForm> getForms(){
+//        return forms;
+//    }
+//    public void setForms(Set<OrderForm> forms){
+//        this.forms = forms;
+//    }
 
 }
