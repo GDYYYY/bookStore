@@ -1,6 +1,7 @@
 package com.reins.bookstore.daoimpl;
 
 import com.reins.bookstore.dao.UserDao;
+import com.reins.bookstore.entity.BookInfo;
 import com.reins.bookstore.entity.UserIcon;
 import com.reins.bookstore.repository.UserIconRepository;
 import com.reins.bookstore.repository.UserRepository;
@@ -59,5 +60,24 @@ public class UserDaoImpl implements UserDao {
         User user1 = userRepository.save(user);
         return user1;
     }
-
+    @Override
+    public User saveUser(User user1){
+        UserIcon img;
+        Integer id = user1.getU_id();
+        System.out.println(2222);
+        if (user1.getUserIcon() != null) {
+            Optional<UserIcon> image = userIconRepository.findById(id);
+            if (image.isPresent()) {
+                image.get().setIcon(user1.getUserIcon().getIcon());
+//            System.out.println(book.getBookInfo().getImage());
+                img = image.get();
+//            System.out.println(image.get().getImage());
+            } else
+                img = new UserIcon(id, user1.getUserIcon().getIcon());
+            System.out.println(3333);
+            userIconRepository.save(img);
+        }
+        System.out.println(444);
+        return user1;
+    }
 }

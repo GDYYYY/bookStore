@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -31,6 +32,8 @@ public class OrderFormDaoImpl implements OrderFormDao {
     }
     @Override
     public List<OrderForm> getByTime(Timestamp t1,Timestamp t2) {
+        System.out.println(t1);
+        System.out.println(t2);
         return orderFormRepository.getByTime(t1,t2);
     }
     @Override

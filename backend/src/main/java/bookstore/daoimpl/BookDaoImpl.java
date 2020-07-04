@@ -24,7 +24,6 @@ public class BookDaoImpl implements BookDao {
         return addImage(bookRepository.getOne(b_id));
     }
 
-
     @Override
     public List<Book> getBooks() {
         List<Book> books = bookRepository.getBooks();
