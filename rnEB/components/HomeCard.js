@@ -26,7 +26,7 @@ export default class HomeCard extends Component {
     render() {
         return (
             <View style={[styles.base,styles.background]}  >
-                <Image source={{uri: this.props.book.image}} style={{width: width/10*3,height:height/5}} ></Image>
+                <Image source={{uri: this.props.book.bookInfo.image}} style={{width: width/10*3,height:height/5}} ></Image>
                 <Text>{this.props.book.name}</Text>
                 <Text style={[styles.author]}>{this.props.book.author}</Text>
                 <Text style={[styles.price]}>￥{this.props.book.price}</Text>
