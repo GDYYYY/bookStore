@@ -110,7 +110,7 @@ export default class User extends Component {
                         <Text style={[styles.title]}>{_this.state.user.username}</Text>
                         <Button type="primary" onPress={() => {
                             AsyncStorage.removeItem('u_id');
-                            _this.setState({isLog: false});
+                            _this.setState({user:{},isLog: false,avatar:'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=145692761,4091651670&fm=26&gp=0.jpg'});
                         }}>退出</Button>
                     </Flex>
                     <Text style={{marginBottom:7,borderColor:'#0c4969', borderBottomWidth: 1,  opacity: 0.5}}/>

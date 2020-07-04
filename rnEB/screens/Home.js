@@ -25,7 +25,12 @@ export default class Home extends Component {
         })
             .then(response => response.json())
             .then(responseData => {
-                _this.setState({books: responseData});
+                var res=[];
+                responseData.forEach(b=>{
+                    if(b.onshelf===1)
+                        res.push(b);
+                });
+                _this.setState({books: res});
             })
             .catch(error => {
                 console.log(error);

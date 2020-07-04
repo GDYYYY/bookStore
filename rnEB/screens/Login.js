@@ -7,7 +7,7 @@ const url = apiUrl + 'login';
 const {width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({
     base: {
-        height: height/8*7,
+        height: height / 8 * 7,
         // paddingTop: height/20,
         // padding: width / 80,
         alignItems: 'center',
@@ -60,11 +60,10 @@ export default class Login extends Component {
             .then((responseData) => {
                 alert("登陆成功");
                 console.log(responseData);
-
+                _this.setState({u_id: responseData.u_id});
                 AsyncStorage.setItem('u_id', JSON.stringify(responseData.u_id));
                 DeviceEventEmitter.emit('UPDATE_USER_DATA');
                 DeviceEventEmitter.emit('UPDATE_CART_DATA');
-
                 navigation.goBack();
             })
             .catch(error => {
@@ -82,19 +81,19 @@ export default class Login extends Component {
                         placeholder={'请输入用户名'}
                         value={this.state.username}
                         onChangeText={this.usernamechange.bind(this)}
-                        />
-                        <TextInput
-                            style={[styles.content]}
-                            placeholder={'请输入密码'}
-                            value={this.state.password}
-                            secureTextEntry={true}
-                            onChangeText={this.passwordchange.bind(this)}
-                        />
-                        <Flex justify="center" direction="row" style={[styles.bottom]}>
-                            <Button type="primary" onPress={this.login.bind(this)} style={{margin:width/20}}>登录</Button>
-                            <Button type="primary" style={{margin:width/20}}>注册</Button>
-                        </Flex>
+                    />
+                    <TextInput
+                        style={[styles.content]}
+                        placeholder={'请输入密码'}
+                        value={this.state.password}
+                        secureTextEntry={true}
+                        onChangeText={this.passwordchange.bind(this)}
+                    />
+                    <Flex justify="center" direction="row" style={[styles.bottom]}>
+                        <Button type="primary" onPress={this.login.bind(this)} style={{margin: width / 20}}>登录</Button>
+                        <Button type="primary" style={{margin: width / 20}}>注册</Button>
+                    </Flex>
                 </Flex>
             </View>);
     }
-    }
+}
