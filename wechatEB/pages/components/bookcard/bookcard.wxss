@@ -1,3 +1,35 @@
 page{
   background-color:ghostwhite;
 }
+.bookcard{
+  width: 17.5rem;
+  height:7rem;
+  background-color: #fff;
+  border-radius: 20rpx;
+  margin-right: 30rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  float: right;
+}
+.content{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+#book_name{
+  font-size: 30rpx;
+  font-weight: 600;
+}
+#author_name{
+  font-size: 25rpx;
+  color: gainsboro;
+}
+#price{
+  font-size: 40rpx;
+  color: #1989fa;
+  /* font-weight: 600; */
+}

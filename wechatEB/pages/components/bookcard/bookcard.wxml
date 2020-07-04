@@ -1,7 +1,22 @@
-<van-card num="{{num}}"
-  price="{{price}}"
+<!-- <van-card num="{{num}}"
+  price="{{price}}" 
   desc="{{author}}"
   title="{{title}}"
   thumb="{{ url }}"
-	centered="true"
-	/>
+	/> -->
+<!-- centered="true" -->
+<view class="bookcard">
+	<view>
+		<van-image width="200rpx" height="200rpx" style="padding-left:30rpx" fit="fill" src="{{url}}" bindtap="toDetails"/>
+	</view>
+	<view >
+		<view>
+			<text id="book_name">{{title}}</text>
+			<text id="author_name">{{author}}</text></view>
+		<view class="content">
+			<text id="price">￥{{price}}</text>
+			<van-stepper value="{{num}}" :disabled="{{role==1}}" bind:change="onChange" catchtap="noop" button-size="20px" input-width="20px" style="margin-left:150rpx"/>
+		</view>
+	</view>
+
+</view>
