@@ -8,7 +8,7 @@ import java.util.List;
 public interface OrdersService {
 
     Orders findOrdersById(Integer f_id, Integer b_id);
-    Orders addOne(Integer f_id, Integer b_id, Integer num);
+    Orders addOne(Integer f_id,Integer u_id, Integer b_id, Integer num);
     List<Orders> getBelongs(Integer f_id);
     List<Orders> getAll();
 }

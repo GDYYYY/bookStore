@@ -9,5 +9,5 @@ public interface UserService {
     User existUser(String username);
     User getUser(Integer u_id);
     List<User> getUsers();
-    User setUser(String username, String password,String email,Integer role);
+    User setUser(User user);
 }
