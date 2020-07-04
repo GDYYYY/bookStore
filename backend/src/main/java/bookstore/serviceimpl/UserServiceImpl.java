@@ -27,14 +27,14 @@ public class UserServiceImpl implements UserService {
         return userDao.getUsers();
     }
     @Override
-    public User setUser(String username, String password,String email,Integer role){
-        User user=existUser(username);
+    public User setUser(User cur){
+        User user=existUser(cur.username);
         if(user==null){
             user=new User();
-            user.setRole(role);
-            user.setEmail(email);
-            user.setPassword(password);
-            user.setUsername(username);
+            user.setRole(cur.role);
+            user.setEmail(cur.email);
+            user.setPassword(cur.password);
+            user.setUsername(cur.username);
             return userDao.setUser(user);
         }
         else return null;

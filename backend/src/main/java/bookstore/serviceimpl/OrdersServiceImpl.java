@@ -34,11 +34,12 @@ public class OrdersServiceImpl implements OrdersService {
     }
 
     @Override
-    public Orders addOne(Integer f_id, Integer b_id, Integer num){
+    public Orders addOne(Integer f_id,Integer u_id, Integer b_id, Integer num){
         Orders cur;
         cur = new Orders();
         cur.setB_id(b_id);
         cur.setF_id(f_id);
+        cur.setU_id(u_id);
         cur.setNum(num);
         Book book1 = bookDao.findOne(b_id);
         book1.setStock(book1.getStock()-num);

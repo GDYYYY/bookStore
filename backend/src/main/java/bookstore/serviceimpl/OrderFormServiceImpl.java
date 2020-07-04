@@ -27,6 +27,8 @@ public class OrderFormServiceImpl implements OrderFormService {
     }
     @Override
     public List<OrderForm> getByTime(Timestamp t1,Timestamp t2) {
+        System.out.println(t1);
+        System.out.println(t2);
         return orderFormDao.getByTime(t1,t2);
     }
     @Override
