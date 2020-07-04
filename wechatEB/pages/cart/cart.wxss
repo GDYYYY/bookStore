@@ -1,7 +1,9 @@
 #content{
   display:flex;
-   justify-content:space-around;
-   flex-wrap:wrap;
+   /* justify-content:space-around;
+   flex-wrap:wrap; */
+   flex-direction: row;
+   align-items: center;
 }
 #info{
   text-align:center;
@@ -10,3 +12,6 @@
   padding-bottom: 2rem;
   color: #0c4969;
 }
+#s text{
+  color: #1989fa;
+  }

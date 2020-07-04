@@ -1,10 +1,17 @@
 <view>
-	<view wx:if="{{isLog}}" >
-		<block wx:for="{{books}}" wx:for-item="book">
-      <bookcard b_id="{{book.b_id}}" num="{{book.num}}" bindtap="toDetails" data-b_id="{{book.b_id}}"></bookcard>
-		</block>
+	<view wx:if="{{isLog&&hackReset}}" >
+		<van-checkbox-group value="{{ checkedBook }}" bind:change="onChange">
+			<block wx:for="{{books}}" wx:for-item="book" index="{{book.id}}" wx:key="{{book.id}}" id="content">
+				<van-checkbox name="{{book.id}}">
+				<bookcard b_id="{{book.b_id}}" num="{{book.num}}" role="1" data-b_id="{{book.b_id}}" bind:reCheck="count"></bookcard>
+				</van-checkbox>
+			</block>
+		</van-checkbox-group>
+		<van-submit-bar id="s" price="{{totalPrice*100}}" button-text="购买" button-type="info" bind:submit="onSubmit">
+		</van-submit-bar>
+
 	</view>
-	<view wx:else id="info">
+	<view wx:if="{{!isLog}}" id="info">
 		<text id="warn">你还没有登录哦~</text>
 	</view>
 </view>
