@@ -7,7 +7,6 @@
 	<view>
 		<van-image width="700rpx" height="300rpx" style="padding-left:30rpx" fit="fill" src="https://img.yzcdn.cn/vant/cat.jpeg" />
 	</view>
-
 	<view id="content">
 		<block wx:for="{{books}}" wx:for-item="book">
       <homecard b_id="{{book.b_id}}" bindtap="toDetails" data-b_id="{{book.b_id}}"></homecard>

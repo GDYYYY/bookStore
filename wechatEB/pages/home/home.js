@@ -17,8 +17,13 @@ Page({
         },
         success(res) {
           console.log(res);
+          var resp=[];
+          res.data.forEach(element => {
+            if(element.onshelf==1)
+            resp.push(element);
+          });
           that.setData({
-            books: res.data
+            books:resp
           })
         }
       });
