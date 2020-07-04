@@ -30,7 +30,7 @@ public class UserController {
 
     @RequestMapping("/signup")
     public User setUser(@RequestBody User user){
-        return userService.setUser(user.username, user.password,user.email,user.role);
+        return userService.setUser(user);
     }
     @RequestMapping("/updateUser")
     public User updateUser(@RequestBody User user){

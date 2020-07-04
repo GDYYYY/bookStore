@@ -31,7 +31,7 @@ public class OrdersController {
     }
 
     @RequestMapping("/addOrders")
-    public Orders addOne(@RequestParam("f_id") Integer f_id, @RequestParam("b_id") Integer b_id, @RequestParam("num") Integer num){
-        return ordersService.addOne(f_id, b_id,num);
+    public Orders addOne(@RequestParam("f_id") Integer f_id,@RequestParam("u_id") Integer u_id, @RequestParam("b_id") Integer b_id, @RequestParam("num") Integer num){
+        return ordersService.addOne(f_id,u_id, b_id,num);
     }
 }

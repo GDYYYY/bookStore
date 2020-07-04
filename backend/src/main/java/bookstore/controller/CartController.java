@@ -22,10 +22,15 @@ public class CartController {
 
     @RequestMapping("/getNum")
     public Cart getOne(@RequestParam("u_id") Integer u_id,@RequestParam("b_id") Integer b_id){
+        System.out.println(u_id);
+        System.out.println(b_id);
         return cartService.findCartById(u_id,b_id);
     }
     @RequestMapping("/updateCart")
     public Cart updateNum(@RequestParam("u_id") Integer u_id,@RequestParam("b_id") Integer b_id,@RequestParam("num") Integer num){
+//        System.out.println(u_id);
+//        System.out.println(b_id);
+//        System.out.println(num);
         return cartService.updateOne(u_id, b_id,num);
     }
     @RequestMapping("/addCart")
