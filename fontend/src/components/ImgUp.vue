@@ -3,12 +3,12 @@
         <div class="img_group">
             <div class="img_box" v-if="allowAddImg">
                 <label for="imgup" v-if="type==1"
-                       style="background-color: #FFFFFF;padding: 20px;border-radius: 5px;border: 1px solid">
-                    选择图片(jpg/png)</label>
+                       style="font-size: smaller">
+                    上传头像(jpg/png)</label>
                 <label for="imgup" v-else
                        style="margin:10px;background-color: #FFFFFF;padding: 10px;border-radius: 5px;border: 1px solid">
                     更改</label>
-                <input id="imgup" style="opacity: 0" type="file" accept="image/*" @change="changeImg($event)">
+                <input id="imgup" style="opacity: 0;width: 0" type="file" accept="image/*" @change="changeImg($event)">
             </div>
             <div class="img_box" v-for="(item,index) in imgArr" :key="index">
                 <div class="img_show_box">
@@ -98,15 +98,10 @@
                         }
                     }, 1000)
                 }
-                // console.log('1');
-                // alert(this.imgArr[0]);
-                // if(this.imgArr!=null)
-                // {sessionStorage.setItem('newImg', this.imgArr);
-                //     console.log(this.imgArr);
-                // }
             },
             deleteImg: function (index) {
                 this.imgArr.splice(index, 1);
+                sessionStorage.removeItem("newImg");
                 if (this.imgArr.length < 1) {
                     this.allowAddImg = true;
                 }

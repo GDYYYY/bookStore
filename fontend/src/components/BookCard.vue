@@ -56,6 +56,8 @@
                 const _this = this;
                 axios.post('http://localhost:8080/updateCart?u_id='+_this.u_id+'&b_id='+_this.b_id+'&num='+_this.num).then(function (resp){
                     _this.num=resp.data.num;
+                    // console.log("ok");
+                    _this.$emit('updateprice')
                 })
             }
         },
