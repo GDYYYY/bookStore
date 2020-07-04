@@ -25,10 +25,13 @@ Component({
       },
       success(resp) {
         console.log(resp);
+        var u=that.url;
+        if(resp.data.bookInfo)
+        u=resp.data.bookInfo.image;
         that.setData({
           author: resp.data.author+'\n',
           title: resp.data.name+'\n',
-          url: resp.data.image,
+          url: u,
           price: resp.data.price,
         });
         console.log("sss");
