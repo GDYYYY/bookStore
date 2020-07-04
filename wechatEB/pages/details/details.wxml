@@ -1,15 +1,15 @@
 <van-toast id="van-toast" />
 <view class="detail">
-	<van-image fit="contain" src="{{book.image}}" width="16rem" height="16rem"></van-image>
+	<van-image fit="contain" src="{{book.bookInfo.image}}" width="16rem" height="16rem"></van-image>
 	<view id="info">
 		<view>
-			<text id="price">￥{{book.price}}</text>
+			<text id="price" >￥{{book.price}}</text>
 		</view>
 		<view> <text id="book_name">{{book.name}}</text></view>
 		<view> <text id="author_name">{{book.author}}</text></view>
 	</view>
 	<view id="info"> <text id="desc">{{book.description}}</text></view>
 </view>	
-<van-submit-bar price="{{ book.price*100 }}" button-text="加入购物车" bind:submit="addCart" id="s" label=" " button-type="info">
+<van-submit-bar price="{{ num*book.price*100 }}" button-text="加入购物车" bind:submit="addCart" id="s" label=" " button-type="info">
 		<van-stepper value="{{ 1 }}" bind:change="onChange"  button-size="20px" input-width="20px"/>
 	</van-submit-bar>

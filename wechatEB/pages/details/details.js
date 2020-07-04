@@ -2,7 +2,8 @@ const app=getApp();
 import Toast from '@vant/weapp/toast/toast';
 Page({
   data: {
-      book:[]
+      book:[],
+      num:'1'
   },
 
   onLoad: function (options) {
@@ -22,10 +23,31 @@ Page({
       }
     })
   },
+  onChange:function(event){
+    this.setData({num:event.detail});
+    // Toast(this.data.num);
+  },
   addCart: function (event) {
     // wx.navigateTo({
     //   url: '../login/login',
     // })
-    Toast('呀，你没钱，不卖');
+    console.log(app.globalData.user);
+    if(!app.globalData.user.u_id)
+    Toast('请先登录');
+    else{
+    wx.request({
+      url: 'http://localhost:8080/addCart?u_id='+ app.globalData.user.u_id+'&b_id='+app.globalData.b_id+'&num='+this.data.num,
+      method: "POST",
+      header: {
+        'content-type': 'application/json',
+      },
+      success(resp) {
+        console.log(resp);
+        Toast('添加成功！');
+        // that.setData({
+        //   book:resp.data
+        // });
+      }
+    })}
   },
 })
